@@ -17,10 +17,16 @@ jobs:
         with:
           php-version: '8.2'
           extensions: mbstring, intl, pdo_mysql
+
       - name: Check bundles.php
         run: grep MakerBundle config/bundles.php || echo "MakerBundle OK"
-      - name: Install Composer dependencies (production)
-        run: composer install --no-dev --optimize-autoloader --no-interaction
+
+      - name: Clear & warmup Symfony cache
+        run: |
+          rm -rf var/cache/*
+          composer install --no-dev --optimize-autoloader --no-interaction
+          php bin/console cache:clear --env=prod
+          php bin/console cache:warmup --env=prod
 
       - name: Deploy to server via SSH
         uses: appleboy/ssh-action@v0.1.10
