@@ -34,7 +34,7 @@ jobs:
 #          DATABASE_URL=null composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
       # 4. Run tests (optionnel)
       - name: Run tests
-        run: composer test
+        run: php ./vendor/bin/phpunit -c phpunit.dist.xml
 
       # 5. Deploy to server via SSH
       - name: whoami
