@@ -33,7 +33,7 @@ jobs:
 
       # 4. Run tests (optionnel)
       - name: Run tests
-        run: php bin/phpunit
+        run: composer test
 
       # 5. Deploy to server via SSH
       - name: whoami
