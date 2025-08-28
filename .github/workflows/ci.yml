@@ -80,7 +80,7 @@ jobs:
           script: |
             cd ~/cicd
             git pull origin master
-            composer install --no-dev --optimize-autoloader --no-interaction
+            composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
             php bin/console doctrine:schema:update --force
             php bin/console cache:clear --env=prod
             php bin/console cache:warmup --env=prod
