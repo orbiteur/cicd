@@ -43,6 +43,18 @@ jobs:
             echo "SERVER_HOST is set"
           fi
 
+          if [ -z "${{ secrets.SERVER_USER }}" ]; then
+            echo "SERVER_USER is NOT set"
+          else
+            echo "SERVER_USER is set"
+          fi
+
+          if [ -z "${{ secrets.SERVER_PASSWORD }}" ]; then
+            echo "SERVER_PASSWORD is NOT set"
+          else
+            echo "SERVER_PASSWORD is set"
+          fi
+
       # 5. Deploy to server via SSH
       - name: Deploy to server via SSH
         uses: appleboy/ssh-action@v1
