@@ -55,13 +55,19 @@ jobs:
             echo "${{ secrets.SERVER_PASSWORD }}" | md5sum
           fi
 
+          if [ -z "${{ secrets.SERVER_KEY }}" ]; then
+            echo "SERVER_PASSWORD is NOT set"
+          else
+            echo "${{ secrets.SERVER_KEY }}" | md5sum
+          fi
+
       # 5. Deploy to server via SSH
       - name: Deploy to server via SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASSWORD }}
+          key: ${{ secrets.SERVER_KEY }}
           script: |
             cd ~/cicd
             git pull origin master
