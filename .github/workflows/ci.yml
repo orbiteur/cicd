@@ -40,19 +40,19 @@ jobs:
           if [ -z "${{ secrets.SERVER_HOST }}" ]; then
             echo "SERVER_HOST is NOT set"
           else
-            echo "SERVER_HOST is set"
+            echo "${{ secrets.SERVER_HOST }}" | md5sum
           fi
 
           if [ -z "${{ secrets.SERVER_USER }}" ]; then
             echo "SERVER_USER is NOT set"
           else
-            echo "SERVER_USER is set"
+            echo "${{ secrets.SERVER_USER }}" | md5sum
           fi
 
           if [ -z "${{ secrets.SERVER_PASSWORD }}" ]; then
             echo "SERVER_PASSWORD is NOT set"
           else
-            echo "SERVER_PASSWORD is set"
+            echo "${{ secrets.SERVER_PASSWORD }}" | md5sum
           fi
 
       # 5. Deploy to server via SSH
