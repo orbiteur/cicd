@@ -79,7 +79,7 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           script: |
             cd ~/cicd
-            git pull origin master
+            GIT_SSH_COMMAND="ssh -i ~/.ssh/id_orbiteur -o StrictHostKeyChecking=no" git pull origin master
             composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
             php bin/console doctrine:schema:update --force --env=prod
             php bin/console cache:clear --env=prod
