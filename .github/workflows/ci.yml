@@ -35,6 +35,14 @@ jobs:
 #      - name: Run tests
 #        run: php bin/phpunit
 #
+      - name: Print SERVER_HOST (debug)
+        run: |
+          if [ -z "${{ secrets.SERVER_HOST }}" ]; then
+            echo "SERVER_HOST is NOT set"
+          else
+            echo "SERVER_HOST is set"
+          fi
+
       # 5. Deploy to server via SSH
       - name: Deploy to server via SSH
         uses: appleboy/ssh-action@v1
@@ -43,12 +51,6 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            if [ -z "${{ secrets.SERVER_HOST }}" ]; then
-              echo "SERVER_HOST is NOT set"
-            else
-              echo "SERVER_HOST is set"
-            fi
-
             cd ~/cicd
             git pull origin master
             composer install --no-dev --optimize-autoloader --no-interaction
