@@ -1,33 +1,40 @@
-name: Deploy Symfony
+name: Symfony CI/CD
 
 on:
   push:
-    branches: [ master ]  # Déploiement à chaque push sur main
+    branches:
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      APP_ENV: prod
+      APP_DEBUG: 0
 
     steps:
-      - name: Checkout repository
+      # 1. Checkout code (local copy, juste pour tests/tests unitaires)
+      - name: Checkout code
         uses: actions/checkout@v3
 
+      # 2. Set up PHP for CI tasks
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          extensions: mbstring, intl, pdo_mysql
+          extensions: mbstring, intl, pdo_mysql, zip
+          coverage: none
 
-#      - name: Check bundles.php
-#        run: grep MakerBundle config/bundles.php || echo "MakerBundle OK"
-#
-#      - name: Clear & warmup Symfony cache
-#        run: |
-#          rm -rf var/cache/*
-#          composer install --no-dev --optimize-autoloader --no-interaction
-#          php bin/console cache:clear --env=prod
-#          php bin/console cache:warmup --env=prod
-#
+      # 3. Install Composer dependencies (optionnel si tests locaux)
+      - name: Install dependencies
+        run: |
+          composer install --no-dev --optimize-autoloader --no-interaction
+
+      # 4. Run tests (optionnel)
+      - name: Run tests
+        run: php bin/phpunit
+
+      # 5. Deploy to server via SSH
       - name: Deploy to server via SSH
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -39,4 +46,5 @@ jobs:
             git pull origin master
             composer install --no-dev --optimize-autoloader --no-interaction
             php bin/console doctrine:schema:update --force
-            php bin/console cache:clear
+            php bin/console cache:clear --env=prod
+            php bin/console cache:warmup --env=prod
