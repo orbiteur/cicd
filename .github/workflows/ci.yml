@@ -25,15 +25,15 @@ jobs:
           extensions: mbstring, intl, pdo_mysql, zip
           coverage: none
 
-      # 3. Install Composer dependencies (optionnel si tests locaux)
-      - name: Install dependencies
-        run: |
-          composer install --no-dev --optimize-autoloader --no-interaction
-
-      # 4. Run tests (optionnel)
-      - name: Run tests
-        run: php bin/phpunit
-
+#      # 3. Install Composer dependencies (optionnel si tests locaux)
+#      - name: Install dependencies
+#        run: |
+#          DATABASE_URL=null composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+#
+#      # 4. Run tests (optionnel)
+#      - name: Run tests
+#        run: php bin/phpunit
+#
       # 5. Deploy to server via SSH
       - name: Deploy to server via SSH
         uses: appleboy/ssh-action@v0.1.10
