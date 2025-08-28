@@ -12,7 +12,7 @@ class PublicController extends AbstractController
     public function hello(): JsonResponse
     {
         return $this->json([
-            'message' => 'Hello 1',
+            'message' => 'Hello 2',
         ]);
     }
 }
