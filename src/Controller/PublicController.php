@@ -12,7 +12,7 @@ class PublicController extends AbstractController
     public function hello(): JsonResponse
     {
         return $this->json([
-            'message' => 'Hello, this is a public route 🚀',
+            'message' => 'Hello 1',
         ]);
     }
 }
