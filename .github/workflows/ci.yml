@@ -29,8 +29,9 @@ jobs:
       # 3. Install Composer dependencies (optionnel si tests locaux)
       - name: Install dependencies
         run: |
-          DATABASE_URL=null composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+          DATABASE_URL=null composer install --dev --no-interaction --no-scripts
 
+#          DATABASE_URL=null composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
       # 4. Run tests (optionnel)
       - name: Run tests
         run: composer test
